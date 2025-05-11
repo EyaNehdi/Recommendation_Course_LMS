@@ -23,7 +23,7 @@ app = FastAPI(title="Recommendation Microservice")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5000"],
+    allow_origins=["http://localhost:5173", "http://localhost:5000","trelix-livid.vercel.app","https://trelix-xj5h.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -140,4 +140,7 @@ async def get_recommendations(user_id: str, top_n: int = 10):
 # Run the app
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+    port = int(os.environ.get("PORT", 8000))  # Render injects this PORT
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
+
